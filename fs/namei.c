@@ -554,6 +554,7 @@ static int unlazy_walk(struct nameidata *nd, struct dentry *dentry)
 err_child:
 	spin_unlock(&dentry->d_lock);
 
+
 err_parent:
 	spin_unlock(&parent->d_lock);
 err_root:
@@ -2172,6 +2173,7 @@ user_path_parent(int dfd, const char __user *path, struct nameidata *nd,
 	int error;
 
 
+
 	/* only LOOKUP_REVAL is allowed in extra flags */
 	flags &= LOOKUP_REVAL;
 
@@ -3657,6 +3659,7 @@ retry:
 out_dput:
 	done_path_create(&new_path, new_dentry);
 	if (retry_estale(error, how)) {
+		path_put(&old_path);
 		how |= LOOKUP_REVAL;
 		goto retry;
 	}

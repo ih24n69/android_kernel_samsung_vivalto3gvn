@@ -663,6 +663,7 @@ void input_close_device(struct input_handle *handle)
 {
 	struct input_dev *dev = handle->dev;
 
+
 	mutex_lock(&dev->mutex);
 
 	__input_release_device(handle);
@@ -1898,6 +1899,9 @@ void input_set_capability(struct input_dev *dev, unsigned int type, unsigned int
 		break;
 
 	case EV_ABS:
+		input_alloc_absinfo(dev);
+		if (!dev->absinfo)
+			return;
 		__set_bit(code, dev->absbit);
 		break;
 
